@@ -576,14 +576,53 @@ Qui prépare, planning de préparation..."></textarea>
                 </div>
             </div>
             
-            <!-- LISTE DE COURSES (Version simplifiée - conserve juste les inputs basiques) -->
-            <div class="section">
-                <h2>🛒 Liste de courses</h2>
-                <div class="info-box">
-                    Liste collaborative - tout le monde peut ajouter des articles
-                </div>
-                <textarea id="liste-courses" placeholder="Listez ici tous les articles à acheter..." style="min-height: 300px;"></textarea>
-            </div>
+            <!-- LISTE DE COURSES DÉTAILLÉE -->
+<div class="section">
+    <h2>🛒 Liste de courses complète</h2>
+    <div class="info-box">
+        Coche les articles au fur et à mesure de tes achats
+    </div>
+    
+    <table class="shopping-table">
+        <thead>
+            <tr>
+                <th style="width: 40px;">✓</th>
+                <th>Article</th>
+                <th style="width: 100px;">Quantité</th>
+                <th style="width: 120px;">Qui achète</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="shopping-category">
+                <td colspan="4">🧀 APÉRO VENDREDI - Grazing Table</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="shop-check" data-id="shop1"></td>
+                <td><input type="text" class="shop-item" data-id="item1" placeholder="Ex: Comté"></td>
+                <td><input type="text" class="shop-qty" data-id="qty1" placeholder="500g"></td>
+                <td><input type="text" class="shop-who" data-id="who1" placeholder="Nom"></td>
+            </tr>
+            <!-- Répète ce pattern pour 15-20 lignes avec shop2, shop3, etc. -->
+            
+            <tr class="shopping-category">
+                <td colspan="4">🍖 SAMEDI MIDI - Effiloché & Accompagnements</td>
+            </tr>
+            <!-- Idem pour les autres catégories -->
+            
+            <tr class="shopping-category">
+                <td colspan="4">🎂 GÂTEAUX D'ANNIVERSAIRE</td>
+            </tr>
+            
+            <tr class="shopping-category">
+                <td colspan="4">🍓 SAMEDI SOIR - Dessert</td>
+            </tr>
+            
+            <tr class="shopping-category">
+                <td colspan="4">🥤 BOISSONS</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
             
             <!-- DÉCORATION -->
             <div class="section">
