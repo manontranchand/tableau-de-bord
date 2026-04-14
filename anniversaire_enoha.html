@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<html lang="fr">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐋 Anniversaire Enoha - Planning Complet</title>
@@ -169,6 +169,26 @@
             border-radius: 10px;
             margin: 15px 0;
             border-left: 4px solid #4caf50;
+        }
+        
+        .sync-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 14px;
+            z-index: 1000;
+        }
+        
+        .sync-status.synced {
+            border-left: 4px solid #4caf50;
+        }
+        
+        .sync-status.syncing {
+            border-left: 4px solid #ff9800;
         }
         
         .chambre-box {
@@ -345,6 +365,10 @@
     </style>
 </head>
 <body>
+    <div class="sync-status" id="syncStatus">
+        🔄 Connexion...
+    </div>
+    
     <div class="container">
         <div class="header">
             <h1>🐋 Premier Anniversaire d'Enoha</h1>
@@ -356,10 +380,10 @@
         
         <div class="content">
             <div class="success-box">
-                <strong>✅ Dashboard prêt à l'emploi</strong><br>
-                • Sauvegarde automatique dans votre navigateur<br>
-                • Photos d'inspiration intégrées<br>
-                • Répartition des tâches par personne
+                <strong>✅ Dashboard synchronisé en temps réel</strong><br>
+                • Toutes les modifications sont visibles par tout le monde<br>
+                • Les données se synchronisent automatiquement<br>
+                • Regardez l'indicateur de synchronisation en haut à droite
             </div>
             
             <!-- VUE D'ENSEMBLE -->
@@ -367,11 +391,11 @@
                 <h2>📋 Vue d'ensemble</h2>
                 <div class="stats-grid">
                     <div class="stat-box" style="background: #e3f2fd;">
-                        <div class="stat-number" style="color: #1976d2;" id="stat-invites">21</div>
+                        <div class="stat-number" style="color: #1976d2;" id="stat-invites">-</div>
                         <div class="stat-label">Invités</div>
                     </div>
                     <div class="stat-box" style="background: #fff3e0;">
-                        <div class="stat-number" style="color: #f57c00;" id="stat-chambres">7</div>
+                        <div class="stat-number" style="color: #f57c00;" id="stat-chambres">-</div>
                         <div class="stat-label">Chambres</div>
                     </div>
                     <div class="stat-box" style="background: #e8f5e9;">
@@ -388,7 +412,7 @@
                 <input type="text" id="airbnb" value="https://www.airbnb.fr/rooms/39432139">
                 
                 <label>📝 Notes générales</label>
-                <textarea id="notes-general" placeholder="Notes importantes sur l'organisation...">Arrivée 17h.</textarea>
+                <textarea id="notes-general" placeholder="Notes importantes sur l'organisation..."></textarea>
             </div>
             
             <!-- INVITÉS -->
@@ -404,30 +428,11 @@ Dominique
 Juju
 Jojo
 Alana
-...">Manon
-Niels
-Patricia
-Dominique
-Lisa
-Franck
-Martine
-Alana
-Julia
-Joachim
-Candice
-Philippe
-Denis
-Mina
-Michel
-Bernadette
-Antoine
-Fanny</textarea>
+..."></textarea>
                 
                 <label>👶 Enfants avec âges</label>
                 <textarea id="enfants" placeholder="Enoha (1 an)
-...">Enoha (1 an)
-Aaron (6 ans)
-Mylow (4 ans)</textarea>
+..."></textarea>
                 
                 <label>🍽️ Régimes spéciaux / Allergies</label>
                 <textarea id="allergies" placeholder="Végétarien, vegan, sans gluten, allergies..."></textarea>
@@ -439,48 +444,15 @@ Mylow (4 ans)</textarea>
                 
                 <div id="chambres-container">
                     <div class="chambre-box">
-                        <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;" value="Maison Chambre 1">
-                        <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;">Martine
-Alana</textarea>
+                        <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
+                        <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
                     </div>
-                <div class="chambre-box">
-                <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;" value="Maison Chambre 2">
-                <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;">Patricia
-Dominique</textarea>
-                <button onclick="this.parentElement.remove(); saveData();" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-            </div><div class="chambre-box">
-                <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;" value="Maison Chambre 3">
-                <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;">Niels
-Manon
-Enoha</textarea>
-                <button onclick="this.parentElement.remove(); saveData();" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-            </div><div class="chambre-box">
-                <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;" value="Appartement 1 Chambre">
-                <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;">Franck
-Lisa</textarea>
-                <button onclick="this.parentElement.remove(); saveData();" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-            </div><div class="chambre-box">
-                <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;" value="Appartement 1 Salon (2 canapés lits)">
-                <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;">Candice
-Philippe
-Aaron
-Mylow</textarea>
-                <button onclick="this.parentElement.remove(); saveData();" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-            </div><div class="chambre-box">
-                <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;" value="Appartement 2 Chambre">
-                <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;">Mina</textarea>
-                <button onclick="this.parentElement.remove(); saveData();" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-            </div><div class="chambre-box">
-                <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;" value="Appartement 2 Salon (canapé lit)">
-                <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;">Denis</textarea>
-                <button onclick="this.parentElement.remove(); saveData();" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-            </div></div>
+                </div>
                 
                 <button onclick="ajouterChambre()">➕ Ajouter une chambre</button>
                 
                 <label style="margin-top: 20px;">🛏️ Équipements nécessaires</label>
-                <textarea id="equipements" placeholder="Lits bébé, chaises hautes, linge de lit...">Lit bébé fourni.
-Prévoir chaise haute, baignoire pliable.</textarea>
+                <textarea id="equipements" placeholder="Lits bébé, chaises hautes, linge de lit..."></textarea>
             </div>
             
             <!-- REPAS -->
@@ -501,8 +473,7 @@ Prévoir chaise haute, baignoire pliable.</textarea>
                         <p><strong>Concept :</strong> Grande table garnie façon grazing board avec fromages, charcuteries, fruits, légumes, dips, pains variés</p>
                         
                         <label>Notes complémentaires</label>
-                        <textarea id="vendredi-notes" placeholder="Qui apporte quoi, quantités, organisation...">Lisa prévoit pissaladière &amp; fiadone.
-</textarea>
+                        <textarea id="vendredi-notes" placeholder="Qui apporte quoi, quantités, organisation..."></textarea>
                     </div>
                 </div>
                 
@@ -518,7 +489,7 @@ Prévoir chaise haute, baignoire pliable.</textarea>
                         • Nappe bleu clair<br>
                         • Chemin de table bleu foncé<br>
                         • Ballons bulles au centre<br>
-                        • Statuettes de baleines (bois &amp; céramique)
+                        • Statuettes de baleines (bois & céramique)
                     </div>
                     
                     <img src="table_samedi.png" class="photo-inspiration" alt="Table samedi midi">
@@ -546,13 +517,13 @@ Qui prépare, planning de préparation..."></textarea>
                         </div>
                         
                         <label>Traiteur</label>
-                        <input type="text" id="traiteur-nom" placeholder="Nom du traiteur" value="H.E.C Paella">
+                        <input type="text" id="traiteur-nom" placeholder="Nom du traiteur">
                         
                         <label>Contact</label>
-                        <input type="text" id="traiteur-contact" placeholder="Téléphone / email" value="06 25 54 48 63 ou 06 20 95 71 85 ou catherinegeoffre@gmail.com">
+                        <input type="text" id="traiteur-contact" placeholder="Téléphone / email">
                         
                         <label>Nombre de personnes</label>
-                        <input type="number" id="traiteur-nb" placeholder="Parts" value="20">
+                        <input type="number" id="traiteur-nb" placeholder="Parts">
                         
                         <label>Budget paella</label>
                         <input type="number" id="budget-paella" placeholder="€">
@@ -563,8 +534,8 @@ Qui prépare, planning de préparation..."></textarea>
                         </div>
                         <textarea id="sangria-details" placeholder="Recette, ingrédients..."></textarea>
                         
-                        <h4 style="margin-top: 20px;">🍓 Salade de fraises &amp; glaces</h4>
-                        <textarea id="dessert-samedi" placeholder="Quantité, parfums de glaces, qui prépare...">Préparée par Patricia.</textarea>
+                        <h4 style="margin-top: 20px;">🍓 Salade de fraises & glaces</h4>
+                        <textarea id="dessert-samedi" placeholder="Quantité, parfums de glaces, qui prépare..."></textarea>
                     </div>
                 </div>
                 
@@ -576,20 +547,20 @@ Qui prépare, planning de préparation..."></textarea>
             
             <!-- BOULANGERIE -->
             <div class="section">
-                <h2>🥖 Boulangerie &amp; Viennoiseries</h2>
+                <h2>🥖 Boulangerie & Viennoiseries</h2>
                 <div class="contact-card">
                     <h4>📞 Contact Boulangerie</h4>
                     <label>Nom</label>
-                    <input type="text" id="boulangerie-nom" placeholder="Nom de la boulangerie" value="Maison Fourquin (7 min de la maison)">
+                    <input type="text" id="boulangerie-nom" placeholder="Nom de la boulangerie">
                     
                     <label>Téléphone</label>
-                    <input type="text" id="boulangerie-tel" placeholder="Téléphone" value="0467592960">
+                    <input type="text" id="boulangerie-tel" placeholder="Téléphone">
                     
                     <label>Adresse</label>
-                    <input type="text" id="boulangerie-adresse" placeholder="Adresse" value="12 av. des Embruscalles, 34270 Claret ">
+                    <input type="text" id="boulangerie-adresse" placeholder="Adresse">
                 </div>
                 
-                <h3>📋 Commande pain &amp; viennoiseries</h3>
+                <h3>📋 Commande pain & viennoiseries</h3>
                 <div class="menu-item">
                     <label>Samedi matin</label>
                     <textarea id="pain-samedi" placeholder="Croissants x ..., pains au chocolat x ..., baguettes x ..."></textarea>
@@ -605,248 +576,13 @@ Qui prépare, planning de préparation..."></textarea>
                 </div>
             </div>
             
-            <!-- LISTE DE COURSES -->
+            <!-- LISTE DE COURSES (Version simplifiée - conserve juste les inputs basiques) -->
             <div class="section">
-                <h2>🛒 Liste de courses complète</h2>
+                <h2>🛒 Liste de courses</h2>
                 <div class="info-box">
-                    Coche les articles au fur et à mesure de tes achats
+                    Liste collaborative - tout le monde peut ajouter des articles
                 </div>
-                
-                <table class="shopping-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 40px;">✓</th>
-                            <th>Article</th>
-                            <th style="width: 100px;">Quantité</th>
-                            <th style="width: 120px;">Qui achète</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="shopping-category">
-                            <td colspan="4">🧀 APÉRO VENDREDI - Grazing Table</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Comté" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="500g" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Brie" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="1" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Jambon cru" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="300g" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Saucisson" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="2" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Raisins" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="1kg" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        
-                        <tr class="shopping-category">
-                            <td colspan="4">🍖 SAMEDI MIDI - Effiloché &amp; Accompagnements</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Épaule de porc" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="2kg" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Farine (cakes)" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="500g" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Courgettes" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="3" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Feta" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="200g" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Tomates cerises" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="500g" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        
-                        <tr class="shopping-category">
-                            <td colspan="4">🎂 GÂTEAUX D'ANNIVERSAIRE</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Farine" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="1kg" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Sucre" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="1kg" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Œufs" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="12" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Beurre" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="500g" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Colorant bleu" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="1" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        
-                        <tr class="shopping-category">
-                            <td colspan="4">🍓 SAMEDI SOIR - Dessert</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Fraises" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="2kg" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Glace vanille" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="2L" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Glace chocolat" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="2L" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        
-                        <tr class="shopping-category">
-                            <td colspan="4">🥤 BOISSONS</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Jus d'orange" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="3L" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Eau pétillante" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="6L" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Ex: Vin (sangria)" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="3 bouteilles" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="Nom" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                            <td><input type="text" placeholder="" onchange="saveData()"></td>
-                        </tr>
-                        
-                        <tr class="shopping-category">
-                            <td colspan="4">🍽️ VAISSELLE JETABLE</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="padding: 15px;">
-                                <div class="info-box" style="margin: 0; background: #fce4ec; border-left-color: #e91e63;">
-                                    <strong>👤 Fournie par :</strong> Patricia, Dominique et Manon
-                                </div>
-                                <textarea id="vaisselle-details" placeholder="Assiettes, couverts, gobelets, serviettes..." style="margin-top: 10px;"></textarea>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <textarea id="liste-courses" placeholder="Listez ici tous les articles à acheter..." style="min-height: 300px;"></textarea>
             </div>
             
             <!-- DÉCORATION -->
@@ -864,20 +600,6 @@ Qui prépare, planning de préparation..."></textarea>
                     
                     <img src="arche_ballons.png" class="photo-inspiration" alt="Arche de ballons">
                     <div class="photo-caption">📸 Inspiration : Table à desserts avec arche de ballons</div>
-                    
-                    <strong>Composition :</strong>
-                    <ul>
-                        <li>30 ballons blancs (25cm)</li>
-                        <li>40 ballons vert menthe (25cm)</li>
-                        <li>20 ballons bleu marine (25cm)</li>
-                        <li>20 ballons bleu ciel (25cm)</li>
-                        <li>2 ballons blancs (45cm)</li>
-                        <li>2 ballons vert menthe (45cm)</li>
-                        <li>1 ballon bleu marine (45cm)</li>
-                        <li>5 étoiles de mer décoratives</li>
-                        <li>10 confettis + 10 confettis argentés (12cm)</li>
-                        <li>Rubans et accessoires</li>
-                    </ul>
                 </div>
                 
                 <h3>🪸 Décoration gâteau</h3>
@@ -889,35 +611,6 @@ Qui prépare, planning de préparation..."></textarea>
                     <textarea id="figurines-details" placeholder="Types de figurines, où les acheter..."></textarea>
                 </div>
                 
-                <h3>📸 Photos d'Enoha - Mobile macramé</h3>
-                <div class="deco-item">
-                    <div class="info-box" style="margin-bottom: 15px; background: #fff3e0; border-left-color: #ff9800;">
-                        <strong>👤 Confectionné par :</strong> Martine
-                    </div>
-                    <textarea id="mobile-details" placeholder="Nombre de photos, format, emplacement du mobile..."></textarea>
-                </div>
-                
-                <h3>🌊 Chemins de table baleines</h3>
-                <div class="deco-item">
-                    <div class="info-box" style="margin-bottom: 15px; background: #e3f2fd; border-left-color: #2196f3;">
-                        <strong>👤 Fournis par :</strong> Manon
-                    </div>
-                    <p><strong>Motif :</strong> Baleines aquarelle + coquillages + étoiles de mer</p>
-                    <p><strong>Couleurs :</strong> Bleu marine, bleu ciel, beige</p>
-                </div>
-                
-                <h3>🎀 Tissus et rubans</h3>
-                <div class="deco-item">
-                    <div class="info-box" style="margin-bottom: 15px; background: #fff3e0; border-left-color: #ff9800;">
-                        <strong>👤 Fournis par :</strong> Lisa
-                    </div>
-                    <ul>
-                        <li>Tissus bleu clair unis</li>
-                        <li>Rubans étoiles dorées</li>
-                        <li>Ficelle naturelle (serviettes)</li>
-                    </ul>
-                </div>
-                
                 <h3>🏊 Ballons miroirs dans la piscine</h3>
                 <div class="deco-item">
                     <img src="piscine.png" class="photo-inspiration" alt="Piscine avec ballons miroirs">
@@ -925,29 +618,6 @@ Qui prépare, planning de préparation..."></textarea>
                     
                     <textarea id="ballons-piscine" placeholder="Nombre de ballons miroirs, tailles..."></textarea>
                 </div>
-                
-                <h3>💨 Machine à bulles</h3>
-                <div class="deco-item">
-                    <textarea id="machine-bulles" placeholder="Emplacement, qui l'apporte, produit pour bulles..."></textarea>
-                </div>
-            </div>
-            
-            <!-- ACTIVITÉS -->
-            <div class="section">
-                <h2>🎮 Activités</h2>
-                
-                <label>🎯 Activités prévues</label>
-                <textarea id="activites" placeholder="Pour les enfants: chasse au trésor, jeux de plage, coloriage...
-Pour tous: jeux de société, balade, piscine, karaoké...">Piscine, fléchettes, babyfoot, PS3, ping-pong, pétanque, machine à bulles, autres surprises.</textarea>
-                
-                <label>🎒 Matériel à apporter</label>
-                <textarea id="materiel" placeholder="Jeux, ballons, crayons, livres..."></textarea>
-                
-                <label>🎵 Playlist</label>
-                <textarea id="playlist" placeholder="Liens Spotify/YouTube, style de musique..."></textarea>
-                
-                <label>📸 Photos/Vidéos</label>
-                <textarea id="photos" placeholder="Qui s'occupe des photos ? Matériel..."></textarea>
             </div>
             
             <!-- BUDGET CADEAUX -->
@@ -982,85 +652,148 @@ Pour tous: jeux de société, balade, piscine, karaoké...">Piscine, fléchettes
             <div class="section">
                 <h2>✅ Checklist</h2>
                 
-                <h3 style="background: #ffebee; padding: 15px; border-radius: 10px;">📅 Cette semaine (mi-avril)</h3>
+                <h3 style="background: #ffebee; padding: 15px; border-radius: 10px;">📅 Cette semaine</h3>
                 <ul class="checklist">
-                    <li><label><input type="checkbox" id="t1" onchange="saveData()" checked="checked"><strong>URGENT: Réserver le traiteur pour la paella</strong></label></li>
-                    <li><label><input type="checkbox" id="t2" onchange="saveData()" checked="checked">Confirmer Airbnb</label></li>
-                    <li><label><input type="checkbox" id="t3" onchange="saveData()" checked="checked">Liste invités finale</label></li>
-                    <li><label><input type="checkbox" id="t4" onchange="saveData()" checked="checked">Vérifier décoration reçue</label></li>
-                </ul>
-                
-                <h3 style="background: #fff9e6; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 Semaine prochaine (fin avril)</h3>
-                <ul class="checklist">
-                    <li><label><input type="checkbox" id="t5" onchange="saveData()">Planifier préparation pyramide de gâteaux</label></li>
-                    <li><label><input type="checkbox" id="t6" onchange="saveData()">Répartir qui fait quels cakes/salades</label></li>
-                    <li><label><input type="checkbox" id="t7" onchange="saveData()">Répartition chambres définitive</label></li>
-                    <li><label><input type="checkbox" id="t8" onchange="saveData()">Liste courses complète</label></li>
-                    <li><label><input type="checkbox" id="t9" onchange="saveData()">Planifier activités</label></li>
-                    <li><label><input type="checkbox" id="t10" onchange="saveData()">Commander pain/viennoiseries à la boulangerie</label></li>
-                </ul>
-                
-                <h3 style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 1 semaine avant (1-4 mai)</h3>
-                <ul class="checklist">
-                    <li><label><input type="checkbox" id="t11" onchange="saveData()">Courses non-périssables</label></li>
-                    <li><label><input type="checkbox" id="t12" onchange="saveData()">Confirmer traiteur paella (livraison 19h30)</label></li>
-                    <li><label><input type="checkbox" id="t13" onchange="saveData()">Préparer playlist</label></li>
-                    <li><label><input type="checkbox" id="t14" onchange="saveData()">Tester matériel photo/vidéo</label></li>
-                    <li><label><input type="checkbox" id="t15" onchange="saveData()">Préparer matériel activités</label></li>
-                    <li><label><input type="checkbox" id="t16" onchange="saveData()">Acheter figurines gâteau (Manon)</label></li>
-                    <li><label><input type="checkbox" id="t17" onchange="saveData()">Acheter bougie et scintillants (Lisa)</label></li>
-                </ul>
-                
-                <h3 style="background: #e1f5fe; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 Mercredi 6 mai</h3>
-                <ul class="checklist">
-                    <li><label><input type="checkbox" id="t18" onchange="saveData()">Courses fraîches (fromages, charcuterie, fruits)</label></li>
-                    <li><label><input type="checkbox" id="t19" onchange="saveData()">Préparer effiloché de porc (marinade)</label></li>
-                    <li><label><input type="checkbox" id="t20" onchange="saveData()">Confirmer boulangerie</label></li>
-                </ul>
-                
-                <h3 style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-top: 30px;">🎉 Vendredi 8 mai - Jour J-1</h3>
-                <ul class="checklist">
-                    <li><label><input type="checkbox" id="t21" onchange="saveData()">Check-in Airbnb</label></li>
-                    <li><label><input type="checkbox" id="t22" onchange="saveData()">Installation chambres</label></li>
-                    <li><label><input type="checkbox" id="t23" onchange="saveData()">Préparer grazing table (Lisa décore)</label></li>
-                    <li><label><input type="checkbox" id="t24" onchange="saveData()">Commencer décoration générale</label></li>
+                    <li><label><input type="checkbox" id="t1"><strong>URGENT: Réserver le traiteur pour la paella</strong></label></li>
+                    <li><label><input type="checkbox" id="t2">Confirmer Airbnb</label></li>
+                    <li><label><input type="checkbox" id="t3">Liste invités finale</label></li>
+                    <li><label><input type="checkbox" id="t4">Vérifier décoration reçue</label></li>
                 </ul>
                 
                 <h3 style="background: #ffe0b2; padding: 15px; border-radius: 10px; margin-top: 30px;">🎂 Samedi 9 mai - ANNIVERSAIRE</h3>
                 <ul class="checklist">
-                    <li><label><input type="checkbox" id="t25" onchange="saveData()">8h30: Juju, Jojo et Alana gonflent tous les ballons</label></li>
-                    <li><label><input type="checkbox" id="t26" onchange="saveData()">9h: Assembler pyramide de gâteaux</label></li>
-                    <li><label><input type="checkbox" id="t27" onchange="saveData()">9h30: Manon, Lisa, Juju et Jojo installent l'arche de ballons</label></li>
-                    <li><label><input type="checkbox" id="t28" onchange="saveData()">10h: Manon dresse la table (nappe bleue, ballons bulles, statuettes)</label></li>
-                    <li><label><input type="checkbox" id="t29" onchange="saveData()">10h: Installer ballons miroirs dans la piscine</label></li>
-                    <li><label><input type="checkbox" id="t30" onchange="saveData()">10h: Installer machine à bulles</label></li>
-                    <li><label><input type="checkbox" id="t31" onchange="saveData()">10h30: Cuire effiloché de porc</label></li>
-                    <li><label><input type="checkbox" id="t32" onchange="saveData()">11h: Préparer cakes et salades</label></li>
-                    <li><label><input type="checkbox" id="t33" onchange="saveData()">12h: REPAS + GÂTEAU D'ANNIVERSAIRE 🎉</label></li>
-                    <li><label><input type="checkbox" id="t34" onchange="saveData()">Après-midi: Préparer sangria (Dominique)</label></li>
-                    <li><label><input type="checkbox" id="t35" onchange="saveData()">19h30: Réceptionner paella du traiteur</label></li>
-                </ul>
-                
-                <h3 style="background: #e0f2f1; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 Dimanche 10 mai - Départ</h3>
-                <ul class="checklist">
-                    <li><label><input type="checkbox" id="t36" onchange="saveData()">Rangement et nettoyage</label></li>
-                    <li><label><input type="checkbox" id="t37" onchange="saveData()">Vérifier état des lieux</label></li>
-                    <li><label><input type="checkbox" id="t38" onchange="saveData()">Check-out Airbnb</label></li>
+                    <li><label><input type="checkbox" id="t5">8h30: Juju, Jojo et Alana gonflent tous les ballons</label></li>
+                    <li><label><input type="checkbox" id="t6">9h: Assembler pyramide de gâteaux</label></li>
+                    <li><label><input type="checkbox" id="t7">9h30: Manon, Lisa, Juju et Jojo installent l'arche de ballons</label></li>
+                    <li><label><input type="checkbox" id="t8">10h: Manon dresse la table</label></li>
+                    <li><label><input type="checkbox" id="t9">10h: Installer ballons miroirs dans la piscine</label></li>
+                    <li><label><input type="checkbox" id="t10">12h: REPAS + GÂTEAU 🎉</label></li>
+                    <li><label><input type="checkbox" id="t11">19h30: Réceptionner paella du traiteur</label></li>
                 </ul>
             </div>
             
             <!-- BOUTON SAUVEGARDE -->
             <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px;">
-                <button onclick="sauvegarder()" style="font-size: 18px; padding: 15px 40px; background: white; color: #667eea;">
-                    💾 Sauvegarder
-                </button>
-                <p style="color: white; margin-top: 15px;">✅ Sauvegarde auto toutes les 5 secondes</p>
+                <p style="color: white; margin: 0; font-size: 18px;">✅ Synchronisation automatique en temps réel</p>
+                <p style="color: white; margin-top: 10px; font-size: 14px;">Toutes les modifications sont sauvegardées automatiquement</p>
             </div>
         </div>
     </div>
 
-    <script>
-        function ajouterChambre() {
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, onValue, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxBhVZwMpaViNd6n8ZVDNmfeEy6w2TThc",
+            authDomain: "anniversaire-enoha.firebaseapp.com",
+            projectId: "anniversaire-enoha",
+            storageBucket: "anniversaire-enoha.firebasestorage.app",
+            messagingSenderId: "459673252895",
+            appId: "1:459673252895:web:28e445c6bbfb7a6020112a",
+            databaseURL: "https://anniversaire-enoha-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+
+        // Initialiser Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const dataRef = ref(database, 'planning');
+
+        let isUpdating = false;
+        const syncStatus = document.getElementById('syncStatus');
+
+        // Fonction pour mettre à jour le statut
+        function updateSyncStatus(status) {
+            if (status === 'synced') {
+                syncStatus.textContent = '✅ Synchronisé';
+                syncStatus.className = 'sync-status synced';
+            } else if (status === 'syncing') {
+                syncStatus.textContent = '🔄 Synchronisation...';
+                syncStatus.className = 'sync-status syncing';
+            }
+        }
+
+        // Fonction pour sauvegarder les données
+        function saveData() {
+            if (isUpdating) return;
+            
+            updateSyncStatus('syncing');
+            
+            const data = {};
+            document.querySelectorAll('input, textarea, select').forEach(el => {
+                if (el.id) {
+                    data[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+                }
+            });
+
+            set(dataRef, data)
+                .then(() => {
+                    setTimeout(() => updateSyncStatus('synced'), 500);
+                })
+                .catch((error) => {
+                    console.error('Erreur de sauvegarde:', error);
+                    syncStatus.textContent = '❌ Erreur';
+                });
+        }
+
+        // Fonction pour charger les données
+        onValue(dataRef, (snapshot) => {
+            isUpdating = true;
+            const data = snapshot.val();
+            
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const el = document.getElementById(key);
+                    if (el) {
+                        if (el.type === 'checkbox') {
+                            el.checked = data[key];
+                        } else {
+                            el.value = data[key];
+                        }
+                    }
+                });
+                updateStats();
+            }
+            
+            setTimeout(() => {
+                isUpdating = false;
+                updateSyncStatus('synced');
+            }, 100);
+        });
+
+        // Ajouter les événements de sauvegarde
+        document.querySelectorAll('input, textarea, select').forEach(el => {
+            if (el.id) {
+                el.addEventListener('input', () => {
+                    if (!isUpdating) {
+                        saveData();
+                    }
+                });
+                
+                if (el.type === 'checkbox') {
+                    el.addEventListener('change', () => {
+                        if (!isUpdating) {
+                            saveData();
+                        }
+                    });
+                }
+            }
+        });
+
+        // Fonction pour mettre à jour les statistiques
+        function updateStats() {
+            const adultes = (document.getElementById('adultes').value || '').split('\n').filter(l => l.trim()).length;
+            const enfants = (document.getElementById('enfants').value || '').split('\n').filter(l => l.trim()).length;
+            document.getElementById('stat-invites').textContent = adultes + enfants || '-';
+            
+            const chambres = document.querySelectorAll('.chambre-box').length;
+            document.getElementById('stat-chambres').textContent = chambres;
+        }
+
+        // Fonction pour ajouter une chambre
+        window.ajouterChambre = function() {
             const container = document.getElementById('chambres-container');
             const div = document.createElement('div');
             div.className = 'chambre-box';
@@ -1072,85 +805,9 @@ Pour tous: jeux de société, balade, piscine, karaoké...">Piscine, fléchettes
             container.appendChild(div);
             saveData();
         }
-        
-        function saveData() {
-            const data = {};
-            document.querySelectorAll('input, textarea, select').forEach(el => {
-                if (el.id) {
-                    data[el.id] = el.type === 'checkbox' ? el.checked : el.value;
-                }
-            });
-            localStorage.setItem('anniversaireEnoha', JSON.stringify(data));
-            updateStats();
-        }
-        
-        function updateStats() {
-            const adultes = (document.getElementById('adultes').value || '').split('\n').filter(l => l.trim()).length;
-            const enfants = (document.getElementById('enfants').value || '').split('\n').filter(l => l.trim()).length;
-            document.getElementById('stat-invites').textContent = adultes + enfants || '-';
-            
-            const chambres = document.querySelectorAll('.chambre-box').length;
-            document.getElementById('stat-chambres').textContent = chambres;
-        }
-        
-        function sauvegarder() {
-            saveData();
-            alert('✅ Toutes vos données ont été sauvegardées !');
-        }
-        
-        function loadData() {
-            const saved = localStorage.getItem('anniversaireEnoha');
-            if (saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    Object.keys(data).forEach(key => {
-                        const el = document.getElementById(key);
-                        if (el) {
-                            if (el.type === 'checkbox') {
-                                el.checked = data[key];
-                            } else {
-                                el.value = data[key];
-                            }
-                        }
-                    });
-                    updateStats();
-                } catch (e) {
-                    console.error('Erreur chargement:', e);
-                }
-            }
-        }
-        
-        window.addEventListener('load', loadData);
-        setInterval(saveData, 5000);
-        window.addEventListener('beforeunload', saveData);
-    </script>
 
-<script>mendeleyWebImporter = {
-  downloadPdfs(t) { return this._call('downloadPdfs', [t]); },
-  open() { return this._call('open', []); },
-  _call(methodName, methodArgs) {
-    window.postMessage({ token: '0.6473481885982534', methodName, methodArgs }, 'null');
-    return new Promise(resolve => {
-      const listener = window.addEventListener('message', event => {
-        const data = event.data;
-        if (typeof data !== 'object' || !('result' in data)) return;
-        window.removeEventListener('message', listener);
-        resolve(data.result);
-      });
-    });
-  }
-};</script><script>mendeleyWebImporter = {
-  downloadPdfs(t) { return this._call('downloadPdfs', [t]); },
-  open() { return this._call('open', []); },
-  _call(methodName, methodArgs) {
-    window.postMessage({ token: '0.1798606037814926', methodName, methodArgs }, 'null');
-    return new Promise(resolve => {
-      const listener = window.addEventListener('message', event => {
-        const data = event.data;
-        if (typeof data !== 'object' || !('result' in data)) return;
-        window.removeEventListener('message', listener);
-        resolve(data.result);
-      });
-    });
-  }
-};</script></body></html>
+        // Initialiser
+        updateSyncStatus('synced');
+    </script>
+</body>
+</html>
