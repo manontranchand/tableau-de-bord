@@ -443,12 +443,12 @@ Alana
                 <h2>🏠 Hébergement - Chambres</h2>
                 
                 <div id="chambres-container">
-                    <div class="chambre-box">
-                        <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
-                        <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
+                    <div class="chambre-box" data-chambre-id="0">
+                        <input type="text" class="chambre-nom" data-id="chambre_nom_0" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
+                        <textarea class="chambre-occupants" data-id="chambre_occupants_0" placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
                     </div>
                 </div>
-                
+                                
                 <button onclick="ajouterChambre()">➕ Ajouter une chambre</button>
                 
                 <label style="margin-top: 20px;">🛏️ Équipements nécessaires</label>
@@ -983,6 +983,7 @@ Qui prépare, planning de préparation..."></textarea>
                         }
                     }
                 });
+                recreerChambres(data);
                 updateStats();
             }
             
@@ -1020,21 +1021,88 @@ Qui prépare, planning de préparation..."></textarea>
             const chambres = document.querySelectorAll('.chambre-box').length;
             document.getElementById('stat-chambres').textContent = chambres;
         }
+// Fonction pour ajouter une chambre
+window.ajouterChambre = function() {
+    const container = document.getElementById('chambres-container');
+    
+    // Compter les chambres existantes
+    const chambresCount = container.querySelectorAll('.chambre-box').length;
+    const newId = chambresCount;
+    
+    const div = document.createElement('div');
+    div.className = 'chambre-box';
+    div.setAttribute('data-chambre-id', newId);
+    div.innerHTML = `
+        <input type="text" class="chambre-nom" data-id="chambre_nom_${newId}" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
+        <textarea class="chambre-occupants" data-id="chambre_occupants_${newId}" placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
+        <button onclick="supprimerChambre(${newId});" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
+    `;
+    container.appendChild(div);
+    
+    // Ajouter les événements de sauvegarde aux nouveaux champs
+    div.querySelectorAll('input, textarea').forEach(el => {
+        el.addEventListener('input', () => {
+            if (!isUpdating) {
+                saveData();
+            }
+        });
+    });
+    
+    saveData();
+}
 
-        // Fonction pour ajouter une chambre
-        window.ajouterChambre = function() {
-            const container = document.getElementById('chambres-container');
+// Fonction pour supprimer une chambre
+window.supprimerChambre = function(chambreId) {
+    const chambre = document.querySelector(`[data-chambre-id="${chambreId}"]`);
+    if (chambre) {
+        chambre.remove();
+        saveData();
+    }
+}
+
+        // Fonction pour recréer les chambres depuis les données Firebase
+function recreerChambres(data) {
+    const container = document.getElementById('chambres-container');
+    
+    // Trouver toutes les chambres sauvegardées
+    const chambresIds = new Set();
+    Object.keys(data).forEach(key => {
+        if (key.startsWith('chambre_nom_') || key.startsWith('chambre_occupants_')) {
+            const id = key.split('_').pop();
+            chambresIds.add(parseInt(id));
+        }
+    });
+    
+    // Supprimer toutes les chambres existantes sauf la première (template)
+    const existingChambres = container.querySelectorAll('.chambre-box');
+    existingChambres.forEach((chambre, index) => {
+        if (index > 0) chambre.remove();
+    });
+    
+    // Recréer les chambres sauvegardées (sauf la 0 qui est le template)
+    Array.from(chambresIds).sort().forEach(id => {
+        if (id > 0) {
             const div = document.createElement('div');
             div.className = 'chambre-box';
+            div.setAttribute('data-chambre-id', id);
             div.innerHTML = `
-                <input type="text" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
-                <textarea placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
-                <button onclick="this.parentElement.remove(); saveData();" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
+                <input type="text" class="chambre-nom" data-id="chambre_nom_${id}" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
+                <textarea class="chambre-occupants" data-id="chambre_occupants_${id}" placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
+                <button onclick="supprimerChambre(${id});" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
             `;
             container.appendChild(div);
-            saveData();
+            
+            // Ajouter les événements
+            div.querySelectorAll('input, textarea').forEach(el => {
+                el.addEventListener('input', () => {
+                    if (!isUpdating) {
+                        saveData();
+                    }
+                });
+            });
         }
-
+    });
+}
         // Initialiser
         updateSyncStatus('synced');
     </script>
