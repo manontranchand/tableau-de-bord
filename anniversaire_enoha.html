@@ -5,369 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐋 Anniversaire Enoha - Planning Complet</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-        
+        * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 1400px; margin: 0 auto; padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 0;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.5em;
-        }
-        
-        .header p {
-            margin: 5px 0;
-            font-size: 1.1em;
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .section {
-            background: white;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-            border-left: 5px solid #4facfe;
-        }
-        
-        .section h2 {
-            color: #2c3e50;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-        
-        .section h3 {
-            color: #4facfe;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        
-        .section h4 {
-            color: #2c3e50;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-        }
-        
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #4facfe;
-        }
-        
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin: 10px 5px 10px 0;
-            transition: all 0.3s;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-box {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .info-box {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid #2196f3;
-        }
-        
-        .warn-box {
-            background: #fff3e0;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid #ff9800;
-        }
-        
-        .success-box {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid #4caf50;
-        }
-        
-        .sync-status {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            font-size: 14px;
-            z-index: 1000;
-        }
-        
-        .sync-status.synced {
-            border-left: 4px solid #4caf50;
-        }
-        
-        .sync-status.syncing {
-            border-left: 4px solid #ff9800;
-        }
-        
-        .chambre-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 15px 0;
-        }
-        
-        .chambre-box h4 {
-            margin: 0 0 10px 0;
-            color: #5a3e36;
-        }
-        
-        .chambre-box ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .chambre-box li {
-            padding: 5px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .chambre-box li:before {
-            content: '👤';
-            position: absolute;
-            left: 0;
-        }
-        
-        .repas-box {
-            background: #f9f9f9;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-            border-left: 4px solid #4facfe;
-        }
-        
-        .menu-item {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border-left: 3px solid #4facfe;
-        }
-        
-        .deco-item {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-        }
-        
-        .deco-item ul {
-            line-height: 1.8;
-        }
-        
-        .photo-inspiration {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            display: block;
-        }
-        
-        .photo-caption {
-            text-align: center;
-            font-style: italic;
-            color: #666;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        
-        .shopping-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .shopping-table th {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        .shopping-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
-        .shopping-table tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .shopping-table input[type="checkbox"] {
-            width: auto;
-            margin: 0;
-        }
-        
-        .shopping-category {
-            background: #e3f2fd;
-            font-weight: 600;
-            color: #1976d2;
-        }
-        
-        .checklist {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .checklist li {
-            padding: 12px;
-            margin: 8px 0;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .checklist input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        
-        .contact-card {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 15px 0;
-        }
-        
-        .contact-card h4 {
-            margin: 0 0 15px 0;
-            color: #5a3e36;
-        }
-        
-        .budget-total {
-            margin-top: 20px;
-            padding: 25px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
+        .container { background: white; border-radius: 20px; padding: 0; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        .header p { margin: 5px 0; font-size: 1.1em; }
+        .content { padding: 40px; }
+        .section { background: white; padding: 25px; margin-bottom: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.07); border-left: 5px solid #4facfe; }
+        .section h2 { color: #2c3e50; margin-top: 0; margin-bottom: 20px; font-size: 1.8em; }
+        .section h3 { color: #4facfe; margin-top: 25px; margin-bottom: 15px; font-size: 1.3em; }
+        .section h4 { color: #2c3e50; margin-top: 15px; margin-bottom: 10px; font-size: 1.1em; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; font-family: inherit; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: #4facfe; }
+        textarea { min-height: 100px; resize: vertical; }
+        label { display: block; margin-top: 15px; font-weight: 600; color: #2c3e50; }
+        button { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; margin: 10px 5px 10px 0; transition: all 0.3s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-number { font-size: 36px; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { color: #666; font-size: 14px; }
+        .info-box { background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #2196f3; }
+        .warn-box { background: #fff3e0; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #ff9800; }
+        .success-box { background: #e8f5e9; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #4caf50; }
+        .sync-status { position: fixed; top: 20px; right: 20px; background: white; padding: 10px 20px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-size: 14px; z-index: 1000; }
+        .sync-status.synced { border-left: 4px solid #4caf50; }
+        .sync-status.syncing { border-left: 4px solid #ff9800; }
+        .repas-box { background: #f9f9f9; padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 4px solid #4facfe; }
+        .menu-item { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 3px solid #4facfe; }
+        .deco-item { background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 10px 0; }
+        .deco-item ul { line-height: 1.8; }
+        .photo-inspiration { width: 100%; max-width: 100%; height: auto; border-radius: 15px; margin: 20px 0; box-shadow: 0 8px 16px rgba(0,0,0,0.2); display: block; }
+        .photo-caption { text-align: center; font-style: italic; color: #666; margin-top: 10px; margin-bottom: 20px; font-size: 14px; }
+        .shopping-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 10px; overflow: hidden; }
+        .shopping-table th { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 15px; text-align: left; font-weight: 600; }
+        .shopping-table td { padding: 12px 15px; border-bottom: 1px solid #e9ecef; }
+        .shopping-table tr:hover { background: #f8f9fa; }
+        .shopping-table input[type="checkbox"] { width: auto; margin: 0; }
+        .shopping-category { background: #e3f2fd; font-weight: 600; color: #1976d2; }
+        .checklist { list-style: none; padding: 0; }
+        .checklist li { padding: 12px; margin: 8px 0; background: #f8f9fa; border-radius: 8px; }
+        .checklist input[type="checkbox"] { width: auto; margin-right: 10px; cursor: pointer; }
+        .contact-card { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 20px; border-radius: 12px; margin: 15px 0; }
+        .contact-card h4 { margin: 0 0 15px 0; color: #5a3e36; }
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .content {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .header h1 { font-size: 1.8em; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="sync-status" id="syncStatus">
-        🔄 Connexion...
-    </div>
+    <div class="sync-status" id="syncStatus">🔄 Connexion...</div>
     
     <div class="container">
         <div class="header">
@@ -395,7 +91,7 @@
                         <div class="stat-label">Invités</div>
                     </div>
                     <div class="stat-box" style="background: #fff3e0;">
-                        <div class="stat-number" style="color: #f57c00;" id="stat-chambres">-</div>
+                        <div class="stat-number" style="color: #f57c00;">1</div>
                         <div class="stat-label">Chambres</div>
                     </div>
                     <div class="stat-box" style="background: #e8f5e9;">
@@ -432,9 +128,6 @@ Alana
                 
                 <label>👶 Enfants avec âges</label>
                 <textarea id="enfants" placeholder="Enoha (1 an)
-Enoha (1 an)
-Aaron (6 ans)
-Mylow (4 ans)
 ..."></textarea>
                 
                 <label>🍽️ Régimes spéciaux / Allergies</label>
@@ -472,7 +165,6 @@ Lisa
                 <label style="margin-top: 30px;">Van </label>
                 <textarea id="van_occupants" placeholder=""></textarea>
             </div>
-                
             
             <!-- REPAS -->
             <div class="section">
@@ -596,242 +288,242 @@ Qui prépare, planning de préparation..."></textarea>
             </div>
             
             <!-- LISTE DE COURSES DÉTAILLÉE -->
-<div class="section">
-    <h2>🛒 Liste de courses complète</h2>
-    <div class="info-box">
-        Coche les articles au fur et à mesure de tes achats
-    </div>
-    
-    <table class="shopping-table">
-        <thead>
-            <tr>
-                <th style="width: 40px;">✓</th>
-                <th>Article</th>
-                <th style="width: 100px;">Quantité</th>
-                <th style="width: 120px;">Qui achète</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="shopping-category">
-                <td colspan="4">🧀 APÉRO VENDREDI - Grazing Table</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop1"></td>
-                <td><input type="text" class="shop-item" data-id="item1" placeholder="Ex: Comté"></td>
-                <td><input type="text" class="shop-qty" data-id="qty1" placeholder="500g"></td>
-                <td><input type="text" class="shop-who" data-id="who1" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop2"></td>
-                <td><input type="text" class="shop-item" data-id="item2" placeholder="Ex: Brie"></td>
-                <td><input type="text" class="shop-qty" data-id="qty2" placeholder="1"></td>
-                <td><input type="text" class="shop-who" data-id="who2" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop3"></td>
-                <td><input type="text" class="shop-item" data-id="item3" placeholder="Ex: Jambon cru"></td>
-                <td><input type="text" class="shop-qty" data-id="qty3" placeholder="300g"></td>
-                <td><input type="text" class="shop-who" data-id="who3" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop4"></td>
-                <td><input type="text" class="shop-item" data-id="item4" placeholder="Ex: Saucisson"></td>
-                <td><input type="text" class="shop-qty" data-id="qty4" placeholder="2"></td>
-                <td><input type="text" class="shop-who" data-id="who4" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop5"></td>
-                <td><input type="text" class="shop-item" data-id="item5" placeholder="Ex: Raisins"></td>
-                <td><input type="text" class="shop-qty" data-id="qty5" placeholder="1kg"></td>
-                <td><input type="text" class="shop-who" data-id="who5" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop6"></td>
-                <td><input type="text" class="shop-item" data-id="item6" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty6" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who6" placeholder=""></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop7"></td>
-                <td><input type="text" class="shop-item" data-id="item7" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty7" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who7" placeholder=""></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop8"></td>
-                <td><input type="text" class="shop-item" data-id="item8" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty8" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who8" placeholder=""></td>
-            </tr>
-            
-            <tr class="shopping-category">
-                <td colspan="4">🍖 SAMEDI MIDI - Effiloché & Accompagnements</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop9"></td>
-                <td><input type="text" class="shop-item" data-id="item9" placeholder="Ex: Épaule de porc"></td>
-                <td><input type="text" class="shop-qty" data-id="qty9" placeholder="2kg"></td>
-                <td><input type="text" class="shop-who" data-id="who9" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop10"></td>
-                <td><input type="text" class="shop-item" data-id="item10" placeholder="Ex: Farine (cakes)"></td>
-                <td><input type="text" class="shop-qty" data-id="qty10" placeholder="500g"></td>
-                <td><input type="text" class="shop-who" data-id="who10" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop11"></td>
-                <td><input type="text" class="shop-item" data-id="item11" placeholder="Ex: Courgettes"></td>
-                <td><input type="text" class="shop-qty" data-id="qty11" placeholder="3"></td>
-                <td><input type="text" class="shop-who" data-id="who11" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop12"></td>
-                <td><input type="text" class="shop-item" data-id="item12" placeholder="Ex: Feta"></td>
-                <td><input type="text" class="shop-qty" data-id="qty12" placeholder="200g"></td>
-                <td><input type="text" class="shop-who" data-id="who12" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop13"></td>
-                <td><input type="text" class="shop-item" data-id="item13" placeholder="Ex: Tomates cerises"></td>
-                <td><input type="text" class="shop-qty" data-id="qty13" placeholder="500g"></td>
-                <td><input type="text" class="shop-who" data-id="who13" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop14"></td>
-                <td><input type="text" class="shop-item" data-id="item14" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty14" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who14" placeholder=""></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop15"></td>
-                <td><input type="text" class="shop-item" data-id="item15" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty15" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who15" placeholder=""></td>
-            </tr>
-            
-            <tr class="shopping-category">
-                <td colspan="4">🎂 GÂTEAUX D'ANNIVERSAIRE</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop16"></td>
-                <td><input type="text" class="shop-item" data-id="item16" placeholder="Ex: Farine"></td>
-                <td><input type="text" class="shop-qty" data-id="qty16" placeholder="1kg"></td>
-                <td><input type="text" class="shop-who" data-id="who16" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop17"></td>
-                <td><input type="text" class="shop-item" data-id="item17" placeholder="Ex: Sucre"></td>
-                <td><input type="text" class="shop-qty" data-id="qty17" placeholder="1kg"></td>
-                <td><input type="text" class="shop-who" data-id="who17" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop18"></td>
-                <td><input type="text" class="shop-item" data-id="item18" placeholder="Ex: Œufs"></td>
-                <td><input type="text" class="shop-qty" data-id="qty18" placeholder="12"></td>
-                <td><input type="text" class="shop-who" data-id="who18" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop19"></td>
-                <td><input type="text" class="shop-item" data-id="item19" placeholder="Ex: Beurre"></td>
-                <td><input type="text" class="shop-qty" data-id="qty19" placeholder="500g"></td>
-                <td><input type="text" class="shop-who" data-id="who19" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop20"></td>
-                <td><input type="text" class="shop-item" data-id="item20" placeholder="Ex: Colorant bleu"></td>
-                <td><input type="text" class="shop-qty" data-id="qty20" placeholder="1"></td>
-                <td><input type="text" class="shop-who" data-id="who20" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop21"></td>
-                <td><input type="text" class="shop-item" data-id="item21" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty21" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who21" placeholder=""></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop22"></td>
-                <td><input type="text" class="shop-item" data-id="item22" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty22" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who22" placeholder=""></td>
-            </tr>
-            
-            <tr class="shopping-category">
-                <td colspan="4">🍓 SAMEDI SOIR - Dessert</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop23"></td>
-                <td><input type="text" class="shop-item" data-id="item23" placeholder="Ex: Fraises"></td>
-                <td><input type="text" class="shop-qty" data-id="qty23" placeholder="2kg"></td>
-                <td><input type="text" class="shop-who" data-id="who23" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop24"></td>
-                <td><input type="text" class="shop-item" data-id="item24" placeholder="Ex: Glace vanille"></td>
-                <td><input type="text" class="shop-qty" data-id="qty24" placeholder="2L"></td>
-                <td><input type="text" class="shop-who" data-id="who24" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop25"></td>
-                <td><input type="text" class="shop-item" data-id="item25" placeholder="Ex: Glace chocolat"></td>
-                <td><input type="text" class="shop-qty" data-id="qty25" placeholder="2L"></td>
-                <td><input type="text" class="shop-who" data-id="who25" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop26"></td>
-                <td><input type="text" class="shop-item" data-id="item26" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty26" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who26" placeholder=""></td>
-            </tr>
-            
-            <tr class="shopping-category">
-                <td colspan="4">🥤 BOISSONS</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop27"></td>
-                <td><input type="text" class="shop-item" data-id="item27" placeholder="Ex: Jus d'orange"></td>
-                <td><input type="text" class="shop-qty" data-id="qty27" placeholder="3L"></td>
-                <td><input type="text" class="shop-who" data-id="who27" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop28"></td>
-                <td><input type="text" class="shop-item" data-id="item28" placeholder="Ex: Eau pétillante"></td>
-                <td><input type="text" class="shop-qty" data-id="qty28" placeholder="6L"></td>
-                <td><input type="text" class="shop-who" data-id="who28" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop29"></td>
-                <td><input type="text" class="shop-item" data-id="item29" placeholder="Ex: Vin (sangria)"></td>
-                <td><input type="text" class="shop-qty" data-id="qty29" placeholder="3 bouteilles"></td>
-                <td><input type="text" class="shop-who" data-id="who29" placeholder="Nom"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop30"></td>
-                <td><input type="text" class="shop-item" data-id="item30" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty30" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who30" placeholder=""></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="shop-check" data-id="shop31"></td>
-                <td><input type="text" class="shop-item" data-id="item31" placeholder=""></td>
-                <td><input type="text" class="shop-qty" data-id="qty31" placeholder=""></td>
-                <td><input type="text" class="shop-who" data-id="who31" placeholder=""></td>
-            </tr>
-            
-            <tr class="shopping-category">
-                <td colspan="4">🍽️ VAISSELLE JETABLE</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="padding: 15px;">
-                    <div class="info-box" style="margin: 0; background: #fce4ec; border-left-color: #e91e63;">
-                        <strong>👤 Fournie par :</strong> Patricia, Dominique et Manon
-                    </div>
-                    <textarea id="vaisselle-details" placeholder="Assiettes, couverts, gobelets, serviettes..." style="margin-top: 10px;"></textarea>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <div class="section">
+                <h2>🛒 Liste de courses complète</h2>
+                <div class="info-box">
+                    Coche les articles au fur et à mesure de tes achats
+                </div>
+                
+                <table class="shopping-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">✓</th>
+                            <th>Article</th>
+                            <th style="width: 100px;">Quantité</th>
+                            <th style="width: 120px;">Qui achète</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="shopping-category">
+                            <td colspan="4">🧀 APÉRO VENDREDI - Grazing Table</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop1"></td>
+                            <td><input type="text" id="item1" placeholder="Ex: Comté"></td>
+                            <td><input type="text" id="qty1" placeholder="500g"></td>
+                            <td><input type="text" id="who1" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop2"></td>
+                            <td><input type="text" id="item2" placeholder="Ex: Brie"></td>
+                            <td><input type="text" id="qty2" placeholder="1"></td>
+                            <td><input type="text" id="who2" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop3"></td>
+                            <td><input type="text" id="item3" placeholder="Ex: Jambon cru"></td>
+                            <td><input type="text" id="qty3" placeholder="300g"></td>
+                            <td><input type="text" id="who3" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop4"></td>
+                            <td><input type="text" id="item4" placeholder="Ex: Saucisson"></td>
+                            <td><input type="text" id="qty4" placeholder="2"></td>
+                            <td><input type="text" id="who4" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop5"></td>
+                            <td><input type="text" id="item5" placeholder="Ex: Raisins"></td>
+                            <td><input type="text" id="qty5" placeholder="1kg"></td>
+                            <td><input type="text" id="who5" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop6"></td>
+                            <td><input type="text" id="item6" placeholder=""></td>
+                            <td><input type="text" id="qty6" placeholder=""></td>
+                            <td><input type="text" id="who6" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop7"></td>
+                            <td><input type="text" id="item7" placeholder=""></td>
+                            <td><input type="text" id="qty7" placeholder=""></td>
+                            <td><input type="text" id="who7" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop8"></td>
+                            <td><input type="text" id="item8" placeholder=""></td>
+                            <td><input type="text" id="qty8" placeholder=""></td>
+                            <td><input type="text" id="who8" placeholder=""></td>
+                        </tr>
+                        
+                        <tr class="shopping-category">
+                            <td colspan="4">🍖 SAMEDI MIDI - Effiloché & Accompagnements</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop9"></td>
+                            <td><input type="text" id="item9" placeholder="Ex: Épaule de porc"></td>
+                            <td><input type="text" id="qty9" placeholder="2kg"></td>
+                            <td><input type="text" id="who9" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop10"></td>
+                            <td><input type="text" id="item10" placeholder="Ex: Farine"></td>
+                            <td><input type="text" id="qty10" placeholder="500g"></td>
+                            <td><input type="text" id="who10" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop11"></td>
+                            <td><input type="text" id="item11" placeholder="Ex: Courgettes"></td>
+                            <td><input type="text" id="qty11" placeholder="3"></td>
+                            <td><input type="text" id="who11" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop12"></td>
+                            <td><input type="text" id="item12" placeholder="Ex: Feta"></td>
+                            <td><input type="text" id="qty12" placeholder="200g"></td>
+                            <td><input type="text" id="who12" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop13"></td>
+                            <td><input type="text" id="item13" placeholder="Ex: Tomates cerises"></td>
+                            <td><input type="text" id="qty13" placeholder="500g"></td>
+                            <td><input type="text" id="who13" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop14"></td>
+                            <td><input type="text" id="item14" placeholder=""></td>
+                            <td><input type="text" id="qty14" placeholder=""></td>
+                            <td><input type="text" id="who14" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop15"></td>
+                            <td><input type="text" id="item15" placeholder=""></td>
+                            <td><input type="text" id="qty15" placeholder=""></td>
+                            <td><input type="text" id="who15" placeholder=""></td>
+                        </tr>
+                        
+                        <tr class="shopping-category">
+                            <td colspan="4">🎂 GÂTEAUX D'ANNIVERSAIRE</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop16"></td>
+                            <td><input type="text" id="item16" placeholder="Ex: Farine"></td>
+                            <td><input type="text" id="qty16" placeholder="1kg"></td>
+                            <td><input type="text" id="who16" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop17"></td>
+                            <td><input type="text" id="item17" placeholder="Ex: Sucre"></td>
+                            <td><input type="text" id="qty17" placeholder="1kg"></td>
+                            <td><input type="text" id="who17" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop18"></td>
+                            <td><input type="text" id="item18" placeholder="Ex: Œufs"></td>
+                            <td><input type="text" id="qty18" placeholder="12"></td>
+                            <td><input type="text" id="who18" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop19"></td>
+                            <td><input type="text" id="item19" placeholder="Ex: Beurre"></td>
+                            <td><input type="text" id="qty19" placeholder="500g"></td>
+                            <td><input type="text" id="who19" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop20"></td>
+                            <td><input type="text" id="item20" placeholder="Ex: Colorant bleu"></td>
+                            <td><input type="text" id="qty20" placeholder="1"></td>
+                            <td><input type="text" id="who20" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop21"></td>
+                            <td><input type="text" id="item21" placeholder=""></td>
+                            <td><input type="text" id="qty21" placeholder=""></td>
+                            <td><input type="text" id="who21" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop22"></td>
+                            <td><input type="text" id="item22" placeholder=""></td>
+                            <td><input type="text" id="qty22" placeholder=""></td>
+                            <td><input type="text" id="who22" placeholder=""></td>
+                        </tr>
+                        
+                        <tr class="shopping-category">
+                            <td colspan="4">🍓 SAMEDI SOIR - Dessert</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop23"></td>
+                            <td><input type="text" id="item23" placeholder="Ex: Fraises"></td>
+                            <td><input type="text" id="qty23" placeholder="2kg"></td>
+                            <td><input type="text" id="who23" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop24"></td>
+                            <td><input type="text" id="item24" placeholder="Ex: Glace vanille"></td>
+                            <td><input type="text" id="qty24" placeholder="2L"></td>
+                            <td><input type="text" id="who24" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop25"></td>
+                            <td><input type="text" id="item25" placeholder="Ex: Glace chocolat"></td>
+                            <td><input type="text" id="qty25" placeholder="2L"></td>
+                            <td><input type="text" id="who25" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop26"></td>
+                            <td><input type="text" id="item26" placeholder=""></td>
+                            <td><input type="text" id="qty26" placeholder=""></td>
+                            <td><input type="text" id="who26" placeholder=""></td>
+                        </tr>
+                        
+                        <tr class="shopping-category">
+                            <td colspan="4">🥤 BOISSONS</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop27"></td>
+                            <td><input type="text" id="item27" placeholder="Ex: Jus d'orange"></td>
+                            <td><input type="text" id="qty27" placeholder="3L"></td>
+                            <td><input type="text" id="who27" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop28"></td>
+                            <td><input type="text" id="item28" placeholder="Ex: Eau pétillante"></td>
+                            <td><input type="text" id="qty28" placeholder="6L"></td>
+                            <td><input type="text" id="who28" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop29"></td>
+                            <td><input type="text" id="item29" placeholder="Ex: Vin (sangria)"></td>
+                            <td><input type="text" id="qty29" placeholder="3 bouteilles"></td>
+                            <td><input type="text" id="who29" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop30"></td>
+                            <td><input type="text" id="item30" placeholder=""></td>
+                            <td><input type="text" id="qty30" placeholder=""></td>
+                            <td><input type="text" id="who30" placeholder="Nom"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id="shop31"></td>
+                            <td><input type="text" id="item31" placeholder=""></td>
+                            <td><input type="text" id="qty31" placeholder=""></td>
+                            <td><input type="text" id="who31" placeholder="Nom"></td>
+                        </tr>
+                        
+                        <tr class="shopping-category">
+                            <td colspan="4">🍽️ VAISSELLE JETABLE</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="padding: 15px;">
+                                <div class="info-box" style="margin: 0; background: #fce4ec; border-left-color: #e91e63;">
+                                    <strong>👤 Fournie par :</strong> Patricia, Dominique et Manon
+                                </div>
+                                <textarea id="vaisselle-details" placeholder="Assiettes, couverts, gobelets, serviettes..." style="margin-top: 10px;"></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
             <!-- DÉCORATION -->
             <div class="section">
@@ -848,6 +540,20 @@ Qui prépare, planning de préparation..."></textarea>
                     
                     <img src="arche_ballons.png" class="photo-inspiration" alt="Arche de ballons">
                     <div class="photo-caption">📸 Inspiration : Table à desserts avec arche de ballons</div>
+                    
+                    <strong>Composition :</strong>
+                    <ul>
+                        <li>30 ballons blancs (25cm)</li>
+                        <li>40 ballons vert menthe (25cm)</li>
+                        <li>20 ballons bleu marine (25cm)</li>
+                        <li>20 ballons bleu ciel (25cm)</li>
+                        <li>2 ballons blancs (45cm)</li>
+                        <li>2 ballons vert menthe (45cm)</li>
+                        <li>1 ballon bleu marine (45cm)</li>
+                        <li>5 étoiles de mer décoratives</li>
+                        <li>10 confettis + 10 confettis argentés (12cm)</li>
+                        <li>Rubans et accessoires</li>
+                    </ul>
                 </div>
                 
                 <h3>🪸 Décoration gâteau</h3>
@@ -859,6 +565,35 @@ Qui prépare, planning de préparation..."></textarea>
                     <textarea id="figurines-details" placeholder="Types de figurines, où les acheter..."></textarea>
                 </div>
                 
+                <h3>📸 Photos d'Enoha - Mobile macramé</h3>
+                <div class="deco-item">
+                    <div class="info-box" style="margin-bottom: 15px; background: #fff3e0; border-left-color: #ff9800;">
+                        <strong>👤 Confectionné par :</strong> Martine
+                    </div>
+                    <textarea id="mobile-details" placeholder="Nombre de photos, format, emplacement du mobile..."></textarea>
+                </div>
+                
+                <h3>🌊 Chemins de table baleines</h3>
+                <div class="deco-item">
+                    <div class="info-box" style="margin-bottom: 15px; background: #e3f2fd; border-left-color: #2196f3;">
+                        <strong>👤 Fournis par :</strong> Manon
+                    </div>
+                    <p><strong>Motif :</strong> Baleines aquarelle + coquillages + étoiles de mer</p>
+                    <p><strong>Couleurs :</strong> Bleu marine, bleu ciel, beige</p>
+                </div>
+                
+                <h3>🎀 Tissus et rubans</h3>
+                <div class="deco-item">
+                    <div class="info-box" style="margin-bottom: 15px; background: #fff3e0; border-left-color: #ff9800;">
+                        <strong>👤 Fournis par :</strong> Lisa
+                    </div>
+                    <ul>
+                        <li>Tissus bleu clair unis</li>
+                        <li>Rubans étoiles dorées</li>
+                        <li>Ficelle naturelle (serviettes)</li>
+                    </ul>
+                </div>
+                
                 <h3>🏊 Ballons miroirs dans la piscine</h3>
                 <div class="deco-item">
                     <img src="piscine.png" class="photo-inspiration" alt="Piscine avec ballons miroirs">
@@ -866,6 +601,29 @@ Qui prépare, planning de préparation..."></textarea>
                     
                     <textarea id="ballons-piscine" placeholder="Nombre de ballons miroirs, tailles..."></textarea>
                 </div>
+                
+                <h3>💨 Machine à bulles</h3>
+                <div class="deco-item">
+                    <textarea id="machine-bulles" placeholder="Emplacement, qui l'apporte, produit pour bulles..."></textarea>
+                </div>
+            </div>
+            
+            <!-- ACTIVITÉS -->
+            <div class="section">
+                <h2>🎮 Activités</h2>
+                
+                <label>🎯 Activités prévues</label>
+                <textarea id="activites" placeholder="Pour les enfants: chasse au trésor, jeux de plage, coloriage...
+Pour tous: jeux de société, balade, piscine, karaoké..."></textarea>
+                
+                <label>🎒 Matériel à apporter</label>
+                <textarea id="materiel" placeholder="Jeux, ballons, crayons, livres..."></textarea>
+                
+                <label>🎵 Playlist</label>
+                <textarea id="playlist" placeholder="Liens Spotify/YouTube, style de musique..."></textarea>
+                
+                <label>📸 Photos/Vidéos</label>
+                <textarea id="photos" placeholder="Qui s'occupe des photos ? Matériel..."></textarea>
             </div>
             
             <!-- BUDGET CADEAUX -->
@@ -900,7 +658,7 @@ Qui prépare, planning de préparation..."></textarea>
             <div class="section">
                 <h2>✅ Checklist</h2>
                 
-                <h3 style="background: #ffebee; padding: 15px; border-radius: 10px;">📅 Cette semaine</h3>
+                <h3 style="background: #ffebee; padding: 15px; border-radius: 10px;">📅 Cette semaine (mi-avril)</h3>
                 <ul class="checklist">
                     <li><label><input type="checkbox" id="t1"><strong>URGENT: Réserver le traiteur pour la paella</strong></label></li>
                     <li><label><input type="checkbox" id="t2">Confirmer Airbnb</label></li>
@@ -908,15 +666,62 @@ Qui prépare, planning de préparation..."></textarea>
                     <li><label><input type="checkbox" id="t4">Vérifier décoration reçue</label></li>
                 </ul>
                 
+                <h3 style="background: #fff9e6; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 Semaine prochaine (fin avril)</h3>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" id="t5">Planifier préparation pyramide de gâteaux</label></li>
+                    <li><label><input type="checkbox" id="t6">Répartir qui fait quels cakes/salades</label></li>
+                    <li><label><input type="checkbox" id="t7">Répartition chambres définitive</label></li>
+                    <li><label><input type="checkbox" id="t8">Liste courses complète</label></li>
+                    <li><label><input type="checkbox" id="t9">Planifier activités</label></li>
+                    <li><label><input type="checkbox" id="t10">Commander pain/viennoiseries à la boulangerie</label></li>
+                </ul>
+                
+                <h3 style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 1 semaine avant (1-4 mai)</h3>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" id="t11">Courses non-périssables</label></li>
+                    <li><label><input type="checkbox" id="t12">Confirmer traiteur paella (livraison 19h30)</label></li>
+                    <li><label><input type="checkbox" id="t13">Préparer playlist</label></li>
+                    <li><label><input type="checkbox" id="t14">Tester matériel photo/vidéo</label></li>
+                    <li><label><input type="checkbox" id="t15">Préparer matériel activités</label></li>
+                    <li><label><input type="checkbox" id="t16">Acheter figurines gâteau (Manon)</label></li>
+                    <li><label><input type="checkbox" id="t17">Acheter bougie et scintillants (Lisa)</label></li>
+                </ul>
+                
+                <h3 style="background: #e1f5fe; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 Mercredi 6 mai</h3>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" id="t18">Courses fraîches (fromages, charcuterie, fruits)</label></li>
+                    <li><label><input type="checkbox" id="t19">Préparer effiloché de porc (marinade)</label></li>
+                    <li><label><input type="checkbox" id="t20">Confirmer boulangerie</label></li>
+                </ul>
+                
+                <h3 style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-top: 30px;">🎉 Vendredi 8 mai - Jour J-1</h3>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" id="t21">Check-in Airbnb</label></li>
+                    <li><label><input type="checkbox" id="t22">Installation chambres</label></li>
+                    <li><label><input type="checkbox" id="t23">Préparer grazing table (Lisa décore)</label></li>
+                    <li><label><input type="checkbox" id="t24">Commencer décoration générale</label></li>
+                </ul>
+                
                 <h3 style="background: #ffe0b2; padding: 15px; border-radius: 10px; margin-top: 30px;">🎂 Samedi 9 mai - ANNIVERSAIRE</h3>
                 <ul class="checklist">
-                    <li><label><input type="checkbox" id="t5">8h30: Juju, Jojo et Alana gonflent tous les ballons</label></li>
-                    <li><label><input type="checkbox" id="t6">9h: Assembler pyramide de gâteaux</label></li>
-                    <li><label><input type="checkbox" id="t7">9h30: Manon, Lisa, Juju et Jojo installent l'arche de ballons</label></li>
-                    <li><label><input type="checkbox" id="t8">10h: Manon dresse la table</label></li>
-                    <li><label><input type="checkbox" id="t9">10h: Installer ballons miroirs dans la piscine</label></li>
-                    <li><label><input type="checkbox" id="t10">12h: REPAS + GÂTEAU 🎉</label></li>
-                    <li><label><input type="checkbox" id="t11">19h30: Réceptionner paella du traiteur</label></li>
+                    <li><label><input type="checkbox" id="t25">8h30: Juju, Jojo et Alana gonflent tous les ballons</label></li>
+                    <li><label><input type="checkbox" id="t26">9h: Assembler pyramide de gâteaux</label></li>
+                    <li><label><input type="checkbox" id="t27">9h30: Manon, Lisa, Juju et Jojo installent l'arche de ballons</label></li>
+                    <li><label><input type="checkbox" id="t28">10h: Manon dresse la table (nappe bleue, ballons bulles, statuettes)</label></li>
+                    <li><label><input type="checkbox" id="t29">10h: Installer ballons miroirs dans la piscine</label></li>
+                    <li><label><input type="checkbox" id="t30">10h: Installer machine à bulles</label></li>
+                    <li><label><input type="checkbox" id="t31">10h30: Cuire effiloché de porc</label></li>
+                    <li><label><input type="checkbox" id="t32">11h: Préparer cakes et salades</label></li>
+                    <li><label><input type="checkbox" id="t33">12h: REPAS + GÂTEAU D'ANNIVERSAIRE 🎉</label></li>
+                    <li><label><input type="checkbox" id="t34">Après-midi: Préparer sangria (Dominique)</label></li>
+                    <li><label><input type="checkbox" id="t35">19h30: Réceptionner paella du traiteur</label></li>
+                </ul>
+                
+                <h3 style="background: #e0f2f1; padding: 15px; border-radius: 10px; margin-top: 30px;">📅 Dimanche 10 mai - Départ</h3>
+                <ul class="checklist">
+                    <li><label><input type="checkbox" id="t36">Rangement et nettoyage</label></li>
+                    <li><label><input type="checkbox" id="t37">Vérifier état des lieux</label></li>
+                    <li><label><input type="checkbox" id="t38">Check-out Airbnb</label></li>
                 </ul>
             </div>
             
@@ -931,9 +736,8 @@ Qui prépare, planning de préparation..."></textarea>
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, set, onValue, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDxBhVZwMpaViNd6n8ZVDNmfeEy6w2TThc",
             authDomain: "anniversaire-enoha.firebaseapp.com",
@@ -944,7 +748,6 @@ Qui prépare, planning de préparation..."></textarea>
             databaseURL: "https://anniversaire-enoha-default-rtdb.europe-west1.firebasedatabase.app"
         };
 
-        // Initialiser Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const dataRef = ref(database, 'planning');
@@ -952,7 +755,6 @@ Qui prépare, planning de préparation..."></textarea>
         let isUpdating = false;
         const syncStatus = document.getElementById('syncStatus');
 
-        // Fonction pour mettre à jour le statut
         function updateSyncStatus(status) {
             if (status === 'synced') {
                 syncStatus.textContent = '✅ Synchronisé';
@@ -963,10 +765,8 @@ Qui prépare, planning de préparation..."></textarea>
             }
         }
 
-        // Fonction pour sauvegarder les données
         function saveData() {
             if (isUpdating) return;
-            
             updateSyncStatus('syncing');
             
             const data = {};
@@ -977,16 +777,13 @@ Qui prépare, planning de préparation..."></textarea>
             });
 
             set(dataRef, data)
-                .then(() => {
-                    setTimeout(() => updateSyncStatus('synced'), 500);
-                })
+                .then(() => setTimeout(() => updateSyncStatus('synced'), 500))
                 .catch((error) => {
-                    console.error('Erreur de sauvegarde:', error);
+                    console.error('Erreur:', error);
                     syncStatus.textContent = '❌ Erreur';
                 });
         }
 
-        // Fonction pour charger les données
         onValue(dataRef, (snapshot) => {
             isUpdating = true;
             const data = snapshot.val();
@@ -1002,7 +799,6 @@ Qui prépare, planning de préparation..."></textarea>
                         }
                     }
                 });
-                recreerChambres(data);
                 updateStats();
             }
             
@@ -1012,117 +808,28 @@ Qui prépare, planning de préparation..."></textarea>
             }, 100);
         });
 
-        // Ajouter les événements de sauvegarde
         document.querySelectorAll('input, textarea, select').forEach(el => {
             if (el.id) {
                 el.addEventListener('input', () => {
-                    if (!isUpdating) {
-                        saveData();
-                    }
+                    if (!isUpdating) saveData();
                 });
                 
                 if (el.type === 'checkbox') {
                     el.addEventListener('change', () => {
-                        if (!isUpdating) {
-                            saveData();
-                        }
+                        if (!isUpdating) saveData();
                     });
                 }
             }
         });
 
-        // Fonction pour mettre à jour les statistiques
         function updateStats() {
-            const adultes = (document.getElementById('adultes').value || '').split('\n').filter(l => l.trim()).length;
-            const enfants = (document.getElementById('enfants').value || '').split('\n').filter(l => l.trim()).length;
-            document.getElementById('stat-invites').textContent = adultes + enfants || '-';
-            
-            const chambres = document.querySelectorAll('.chambre-box').length;
-            document.getElementById('stat-chambres').textContent = chambres;
-        }
-// Fonction pour ajouter une chambre
-window.ajouterChambre = function() {
-    const container = document.getElementById('chambres-container');
-    
-    // Compter les chambres existantes
-    const chambresCount = container.querySelectorAll('.chambre-box').length;
-    const newId = chambresCount;
-    
-    const div = document.createElement('div');
-    div.className = 'chambre-box';
-    div.setAttribute('data-chambre-id', newId);
-    div.innerHTML = `
-        <input type="text" class="chambre-nom" data-id="chambre_nom_${newId}" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
-        <textarea class="chambre-occupants" data-id="chambre_occupants_${newId}" placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
-        <button onclick="supprimerChambre(${newId});" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-    `;
-    container.appendChild(div);
-    
-    // Ajouter les événements de sauvegarde aux nouveaux champs
-    div.querySelectorAll('input, textarea').forEach(el => {
-        el.addEventListener('input', () => {
-            if (!isUpdating) {
-                saveData();
+            const adultes = (document.getElementById('adultes')?.value || '').split('\n').filter(l => l.trim()).length;
+            const enfants = (document.getElementById('enfants')?.value || '').split('\n').filter(l => l.trim()).length;
+            if (document.getElementById('stat-invites')) {
+                document.getElementById('stat-invites').textContent = adultes + enfants || '-';
             }
-        });
-    });
-    
-    saveData();
-}
-
-// Fonction pour supprimer une chambre
-window.supprimerChambre = function(chambreId) {
-    const chambre = document.querySelector(`[data-chambre-id="${chambreId}"]`);
-    if (chambre) {
-        chambre.remove();
-        saveData();
-    }
-}
-
-        // Fonction pour recréer les chambres depuis les données Firebase
-function recreerChambres(data) {
-    const container = document.getElementById('chambres-container');
-    
-    // Trouver toutes les chambres sauvegardées
-    const chambresIds = new Set();
-    Object.keys(data).forEach(key => {
-        if (key.startsWith('chambre_nom_') || key.startsWith('chambre_occupants_')) {
-            const id = key.split('_').pop();
-            chambresIds.add(parseInt(id));
         }
-    });
-    
-    // Supprimer toutes les chambres existantes sauf la première (template)
-    const existingChambres = container.querySelectorAll('.chambre-box');
-    existingChambres.forEach((chambre, index) => {
-        if (index > 0) chambre.remove();
-    });
-    
-    // Recréer les chambres sauvegardées (sauf la 0 qui est le template)
-    Array.from(chambresIds).sort().forEach(id => {
-        if (id > 0) {
-            const div = document.createElement('div');
-            div.className = 'chambre-box';
-            div.setAttribute('data-chambre-id', id);
-            div.innerHTML = `
-                <input type="text" class="chambre-nom" data-id="chambre_nom_${id}" placeholder="Nom de la chambre" style="font-weight: bold; background: transparent; border: 1px solid #ccc;">
-                <textarea class="chambre-occupants" data-id="chambre_occupants_${id}" placeholder="Occupants (un par ligne)" style="background: transparent; margin-top: 10px;"></textarea>
-                <button onclick="supprimerChambre(${id});" style="margin-top: 10px; background: #dc3545;">🗑️ Supprimer</button>
-            `;
-            container.appendChild(div);
-            
-            // Ajouter les événements
-            div.querySelectorAll('input, textarea').forEach(el => {
-                el.addEventListener('input', () => {
-                    if (!isUpdating) {
-                        saveData();
-                    }
-                });
-            });
-        }
-    });
-}
-        // Initialiser
+
         updateSyncStatus('synced');
     </script>
 </body>
