@@ -71,7 +71,7 @@
             <p><strong>Petit Baleineau</strong></p>
             <p>📅 Vendredi 8 au Dimanche 10 mai 2026</p>
             <p>🎂 Dessert d'anniversaire : Samedi 9 mai à midi</p>
-            <p>📍 Location Airbnb - Corconne</p>
+            <p>📍 678 Chemin de Mailhac, 30260 Corconne, Occitanie</p>
         </div>
         
         <div class="content">
@@ -108,7 +108,7 @@
                 <input type="text" id="airbnb" value="https://www.airbnb.fr/rooms/39432139">
                 
                 <label>📝 Notes générales</label>
-                <textarea id="notes-general" placeholder="Notes importantes sur l'organisation..."></textarea>
+                <textarea id="notes-general" placeholder="Notes importantes sur l'organisation...">Arrivée vendredi 17h, départ dimanche 12h après rangement et état des lieux</textarea>
             </div>
             
             <!-- INVITÉS -->
@@ -116,19 +116,28 @@
                 <h2>👥 Liste des invités</h2>
                 
                 <label>Adultes (un par ligne)</label>
-                <textarea id="adultes" placeholder="Manon
+                <textarea id="adultes" placeholder="Manon">Martine
+Franck
 Lisa
-Martine
 Patricia
 Dominique
 Juju
-Jojo
 Alana
-..."></textarea>
+Jojo
+Candice
+Philippe
+Denis
+Jacky
+Antoine
+Fanny
+Manon
+Niels</textarea>
                 
                 <label>👶 Enfants avec âges</label>
                 <textarea id="enfants" placeholder="Enoha (1 an)
-..."></textarea>
+...">Enoha (1 an)
+Aaron (6 ans)
+Mylow (4 ans)</textarea>
                 
                 <label>🍽️ Régimes spéciaux / Allergies</label>
                 <textarea id="allergies" placeholder="Végétarien, vegan, sans gluten, allergies..."></textarea>
@@ -184,7 +193,11 @@ Lisa
                         <p><strong>Concept :</strong> Grande table garnie façon grazing board avec fromages, charcuteries, fruits, légumes, dips, pains variés</p>
                         
                         <label>Notes complémentaires</label>
-                        <textarea id="vendredi-notes" placeholder="Qui apporte quoi, quantités, organisation..."></textarea>
+                        <textarea id="vendredi-notes" placeholder="Qui apporte quoi, quantités, organisation...">
+						Lisa & Franck: 1 planche géante, 1 plateau tournant, de la ficelle, nappe en plastique transparente, gressins, pissaladière, fiadone, tartinade, serviettes.
+						Patricia & Domi: 2 tartinades, vaisselle jetable.
+						Manon & Niels: Fromage, charcuterie, crudités, pains, 1 planche géante.
+						Juju & Jojo: lumières.</textarea>
                     </div>
                 </div>
                 
@@ -729,6 +742,21 @@ Pour tous: jeux de société, balade, piscine, karaoké..."></textarea>
             <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px;">
                 <p style="color: white; margin: 0; font-size: 18px;">✅ Synchronisation automatique en temps réel</p>
                 <p style="color: white; margin-top: 10px; font-size: 14px;">Toutes les modifications sont sauvegardées automatiquement</p>
+                
+                <div style="margin-top: 20px;">
+                    <button onclick="exportData()" style="background: white; color: #667eea; font-weight: bold;">
+                        💾 Télécharger une sauvegarde (JSON)
+                    </button>
+                    <p style="color: white; margin-top: 10px; font-size: 12px;">📌 Conseil : Fais une sauvegarde régulièrement !</p>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                    <button onclick="document.getElementById('importFile').click()" style="background: #fff3e0; color: #f57c00; font-weight: bold;">
+                        📥 Restaurer depuis une sauvegarde
+                    </button>
+                    <p style="color: white; margin-top: 10px; font-size: 12px;">⚠️ Attention : ceci écrasera toutes les données actuelles !</p>
+                </div>
             </div>
         </div>
     </div>
@@ -828,6 +856,81 @@ Pour tous: jeux de société, balade, piscine, karaoké..."></textarea>
             if (document.getElementById('stat-invites')) {
                 document.getElementById('stat-invites').textContent = adultes + enfants || '-';
             }
+        }
+
+        // Fonction d'export des données
+        window.exportData = function() {
+            const data = {};
+            document.querySelectorAll('input, textarea, select').forEach(el => {
+                if (el.id) {
+                    data[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+                }
+            });
+            
+            // Créer le fichier JSON
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            // Créer un lien de téléchargement
+            const a = document.createElement('a');
+            const date = new Date().toISOString().split('T')[0];
+            a.href = url;
+            a.download = `anniversaire_enoha_sauvegarde_${date}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Sauvegarde téléchargée ! Conserve ce fichier précieusement.');
+        }
+
+        // Fonction d'import des données
+        window.importData = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!confirm('⚠️ Attention ! Cela va remplacer TOUTES les données actuelles par celles du fichier. Continuer ?')) {
+                event.target.value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Charger les données dans les champs
+                    Object.keys(data).forEach(key => {
+                        const el = document.getElementById(key);
+                        if (el) {
+                            if (el.type === 'checkbox') {
+                                el.checked = data[key];
+                            } else {
+                                el.value = data[key];
+                            }
+                        }
+                    });
+                    
+                    // Sauvegarder dans Firebase
+                    set(dataRef, data)
+                        .then(() => {
+                            alert('✅ Données restaurées avec succès !');
+                            updateStats();
+                        })
+                        .catch((error) => {
+                            console.error('Erreur:', error);
+                            alert('❌ Erreur lors de la restauration !');
+                        });
+                        
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('❌ Fichier JSON invalide !');
+                }
+                
+                event.target.value = '';
+            };
+            reader.readAsText(file);
         }
 
         updateSyncStatus('synced');
